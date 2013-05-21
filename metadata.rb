@@ -8,6 +8,10 @@ version           "0.0.1"
 
 recipe "gnrd", "configures and example gnrd server"
 
+%w{ mysql database }.each do |cb|
+  depends cb
+end
+
 %w{ ubuntu }.each do |os|
   supports os
 end
