@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+  ServerName <%= node['gnrd']['server_name'] %>
+  DocumentRoot /vagrant/public
+
+  <IfModule mod_deflate.c>
+    SetInputFilter DEFLATE
+  </IfModule>
+
+  <Proxy balancer://thin_cluster>
+    BalancerMember http://127.0.0.1:3020
+    BalancerMember http://127.0.0.1:3021
+    BalancerMember http://127.0.0.1:3022
+    BalancerMember http://127.0.0.1:3023
+    BalancerMember http://127.0.0.1:3024
+    BalancerMember http://127.0.0.1:3025
+    BalancerMember http://127.0.0.1:3026
+    BalancerMember http://127.0.0.1:3027
+  </Proxy>
+
+  ProxyPass / balancer://thin_cluster/
+  ProxyPassReverse / balancer://thin_cluster/
+  ProxyPreserveHost on
+
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+    Allow from all
+  </Proxy>
+</VirtualHost>
+
