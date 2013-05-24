@@ -6,16 +6,16 @@ apache_module 'proxy_http'
 
 apache_module 'rewrite'
 
-directory "/etc/thin" do
-  owner "root"
-  group "root"
-  mode 0755
+directory '/etc/thin' do
+  owner 'root'
+  group 'root'
+  mode '0755'
   action :create
 end
 
 template '/vagrant/config.yml' do
   source 'db_config.erb'
-  mode '0440'
+  mode '0644'
   owner 'root'
   group 'root'
 end
@@ -49,8 +49,6 @@ package 'redis-server'
 
 package 'apache2'
 
-package 'ruby1.9.3'
-
 package 'libxml2'
 
 package 'libxml2-dev'
@@ -78,15 +76,14 @@ package 'wget'
 gem_package 'mysql'
 
 
-script "default ruby 1.9.3" do
-  interpreter "bash"
-  user "root"
-  code %Q{
-    update-alternatives --set ruby /usr/bin/ruby1.9.3
-    gem install bundle
-  }
-  not_if { "gem list | grep bundle" }
-end
+# script "bundle install" do
+#   interpreter "bash"
+#   user "root"
+#   code %Q{
+#     gem install bundle
+#   }
+#   not_if { "gem list | grep bundle" }
+# end
 
 root_connection = { :host => 'localhost', 
                     :username => 'root', 
@@ -119,21 +116,23 @@ end
 #   user 'root'
 #   code 'apt-get -q -y dist-upgrade'
 # end
-
-script "bundle install" do
-  interpreter "bash"
-  user "root"
-  cwd "/vagrant"
-  code %Q{
-    bundle install --without development
-  }
-end
+# 
+# script "bundle install" do
+#   interpreter "bash"
+#   user "root"
+#   cwd "/vagrant"
+#   code %Q{
+#     bundle install --without development
+#   }
+# end
 
 script 'setup' do
   interpreter 'bash'
   user 'root'
   cwd '/vagrant'
   code  <<-EOH
+    source /etc/profile
+    bundle install --without development
     rake db:create:all
     rake db:migrate
     RACK_ENV=test rake db:migrate

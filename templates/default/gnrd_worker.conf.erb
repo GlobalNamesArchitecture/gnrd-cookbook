@@ -1,17 +1,14 @@
-description 'start and stop resque workers for GNRD'
-version '0.01'
-author 'Dmitry Mozzherin'
-
-start on runlevel [2345]
-
-stop on runlevel [016]
-
-respawn
+description "start and stop the gnrd worker`"
+version "1.0"
+author "Dmitry Mozzherin"
 
 expect fork
 
 script
-chdir <%= node['gnrd']['directory'] %>
-exec RACK_ENV=production COUNT=<%= node['gnrd']['worker_count'] %> QUEUE=name_finder rake resque:workers  &
-emit gnrd_worker_starting
+  chdir <%= node[:gnrd][:directory] %>
+  exec /usr/local/rbenv/shims/bundle exec /usr/local/rbenv/shims/rake \
+  environment RACK_ENV=production COUNT=<%= node['gnrd']['worker_count'] %> \
+  QUEUE=name_finder /usr/local/rbenv/shims/rake resque:workers  &
 end script
+
+emits gnrd_worker_starting
