@@ -6,11 +6,7 @@ description       "configures gnrd"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           "0.0.1"
 
-recipe "gnrd", "configures and example gnrd server"
-
-%w{ mysql database }.each do |cb|
-  depends cb
-end
+recipe "gnrd", "configures development gnrd server"
 
 %w{ ubuntu }.each do |os|
   supports os

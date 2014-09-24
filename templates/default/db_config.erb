@@ -27,10 +27,10 @@ test:
 production:
   adapter: mysql2
   host: localhost
-  username: <%= node['mysql']['gnrd_user'] %>
-  password: <%= node['mysql']['gnrd_user_password'] %>
+  username: root
+  password: 
   database: gnrd
-  salt: <%= node['gnrd']['salt'] %>
+  salt: whatever 
   neti_neti_host: 0.0.0.0
   neti_neti_port: 6384
   taxon_finder_host: 0.0.0.0
