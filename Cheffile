@@ -1,0 +1,7 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook "neti-neti",
+  git: "https://github.com/mbl-cli/NetiNeti-cookbook.git"
+
+cookbook "taxon-finder",
+  git: "https://github.com/mbl-cli/taxonfinder-cookbook.git"
