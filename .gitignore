@@ -17,3 +17,4 @@ bin
 .ruby-gemset
 .ruby-version
 tmp
+bundle_bin
