@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - bundle_bin/**/*
+    - Guardfile
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/DotPosition:

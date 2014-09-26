@@ -64,7 +64,7 @@ end
 script "setting hostname" do
   interpreter "bash"
   user "root"
-  code "echo #{node[:gnrd][:server_name]} > /etc/hostname"
+  code "echo #{node["gnrd"]["server_name"]} > /etc/hostname"
 end
 
 %w(git nginx mysql-server redis-server libxml2 libxml2-dev libxslt1.1
@@ -88,7 +88,7 @@ script "installing rvm" do
     \\curl -sSL https://get.rvm.io | sudo bash -s stable"
     sudo sed -i.bak "s/^rvm:.:.*:$/\0vagrant/" /etc/group
   )
-  not_if { "which rvm | grep rvm" }
+  not_if "which rvm | grep rvm"
 end
 
 script "set ruby" do
@@ -97,7 +97,7 @@ script "set ruby" do
     cd /vagrant
     rvm install `cat .ruby-version`
   )
-  not_if { "rvm list |grep `cat .ruby-version`" }
+  not_if "rvm list |grep `cat .ruby-version`"
 end
 
 # script "run vagrant_setup script" do

@@ -34,7 +34,7 @@ guard 'foodcritic', cookbook_paths: '.', all_on_start: false do
 end
 
 guard :rubocop do
-  ignore(%r{tmp})
+  ignore("tmp")
   watch(%r{.+\.rb$})
   watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
 end
